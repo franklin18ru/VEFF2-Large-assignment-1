@@ -34,6 +34,31 @@
 
     //4
 
+    MakeBelieveElement.prototype.parent = function (parentSelector = "") {
+        //Return all parent elements
+        element = this.nodes[0]
+        var parentElements = [];
+        if(parentSelector === ""){
+            //If no parentSelector is passed through then return all parent elements
+        while (element.parentElement) {
+            parentElements.unshift(element.parentElement);
+            element = element.parentElement;
+        }
+        }
+        else{
+            // If parentSelector is passed through only return parents of that type
+            while (element.parentElement) {
+                if(element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
+                parentElements.unshift(element.parentElement);
+                element = element.parentElement;
+            }
+        
+        
+    
+    }
+    return new MakeBelieveElement(parentElements)
+    }
+
 
     //5
     
@@ -92,8 +117,11 @@
 var paragraphs = __('p');
 var divs = __('.item');
 
-//console.log(paragraphs);
-//console.log(divs);
+var parents = __('#password').parent('DIV')
+
+console.log(parents)
+// console.log(paragraphs);
+// console.log(divs);
 
 console.log(paragraphs.getLength());
 console.log(divs.getLength());
