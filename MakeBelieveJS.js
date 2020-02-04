@@ -19,9 +19,8 @@
     };
 
 
-
     //1
-
+    globalObj.__ = query;
 
     //2
     function query(cssSelector) {
@@ -33,12 +32,11 @@
 
 
     //4
-
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
-        element = this.nodes[0]
+        element = this.nodes[0];
         var parentElements = [];
-        if(parentSelector === ""){
+        if(parentSelector === "") {
             //If no parentSelector is passed through then return all parent elements
         while (element.parentElement) {
             parentElements.unshift(element.parentElement);
@@ -48,20 +46,24 @@
         else{
             // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
-                if(element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
+                if (element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
                 parentElements.unshift(element.parentElement);
                 element = element.parentElement;
             }
-        
-        
-    
     }
     return new MakeBelieveElement(parentElements)
-    }
-
+    };
 
     //5
-    
+    MakeBelieveElement.prototype.grandParent = function (selector) {
+        var nodeList = [];
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (this.nodes[i].parentNode.parentNode.matches(selector)) {
+                nodeList.push(this.nodes[i].parentNode.parentNode);
+            }
+        }
+        return nodeList
+    };
 
     //6
 
@@ -93,7 +95,11 @@
 
 
     //13
-
+    MakeBelieveElement.prototype.css = function (element, value) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].setAttribute("style", `${element}: ${value}`)
+        }
+    };
 
     //14
 
@@ -102,12 +108,15 @@
 
 
     //16
+    MakeBelieveElement.prototype.onInput = function (evt) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].addEventListener("input", evt);
+        }
+    };
 
 
-    globalObj.__ = query;
 })(window);
-
-
+///////////////////////////////////////test cases below///////////////////////////////////////
 
 
 
@@ -116,25 +125,55 @@
 var paragraphs = __('p');
 var divs = __('.item');
 
-var parents = __('#password').parent('DIV')
+var parents = __('#password').parent('DIV');
 
-console.log(parents)
+//console.log(parents);
 // console.log(paragraphs);
 // console.log(divs);
 
-console.log(paragraphs.getLength());
-console.log(divs.getLength());
+//console.log(paragraphs.getLength());
+//console.log(divs.getLength());
 
-console.log(paragraphs.getTagNames());
-
-
+//console.log(paragraphs.getTagNames());
 
 
 
-//7
-__('password').onClick(function (evt) {
-    console.log(evt.target.value);
-});
 
-//8
+
+//testing 2
+//var inputs = __('#my-form input');
+//console.log(inputs); //should return a list of all inputs within a form with the id #my-form
+
+
+//testing 3 - not ready in code
+//__('input').parent('form').onInput(function (evt) {
+//    alert('Something happened!')
+//});
+
+//testing 5
+var grandParent = __('#password').grandParent();
+console.log(grandParent); //should return the div with the id #grandfather
+var isGrandParent = __('#password').grandParent('#grandfather');
+console.log(isGrandParent); //should return the div with the id #grandfather
+var emptyGrandParent = __('#password').grandParent('#unknownId');
+console.log(emptyGrandParent); //should return an empty object
+
+//testing 7
+//__('password').onClick(function (evt) {
+  //  console.log(evt.target.value);
+//});
+
+//testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
+
+
+
+
+//testing 13
+__('#elemToChange').css('background-color', 'lightpink');
+
+//testing 16
+__('#username').onInput(function (evt) {
+    //process the input
+    console.log(evt.target.value)
+});
