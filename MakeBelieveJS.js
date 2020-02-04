@@ -83,10 +83,28 @@
     };
 
     //9
-
+    MakeBelieveElement.prototype.append = function(text) {
+        var appendMe;
+        if (typeof text == "string") {
+            appendMe = document.createElement(text); //?????
+        }
+        else {
+            appendMe = text.parentNode
+        }
+        this.nodes[0].append(appendMe)
+    };
 
     //10
-
+    MakeBelieveElement.prototype.prepend = function(text) {
+        var prependMe;
+        if (typeof text == "string") {
+            prependMe = document.createElement(text);
+        }
+        else{
+            prependMe = text.parentNode
+        }
+        this.nodes[0].prepend(prependMe)
+    };
 
     //11
 
@@ -166,6 +184,11 @@ console.log(emptyGrandParent); //should return an empty object
 //testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
 
+//testing 9
+//__('.the-appender').append('<p>I am an appended paragraph!</p>');
+
+//testing 10
+//__('.the-prepender').prepend('<p>I am an prepended paragraph!</p>');
 
 
 
