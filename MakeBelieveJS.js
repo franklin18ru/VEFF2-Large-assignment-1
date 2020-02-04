@@ -45,7 +45,6 @@
     MakeBelieveElement.prototype.onClick = function(evt) {
         for (var i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("click", evt);
-            console.log(evt.target.value);
         }
     };
 
@@ -100,4 +99,14 @@ console.log(divs.getLength());
 
 console.log(paragraphs.getTagNames());
 
+
+
+
+
+//7
+__('password').onClick(function (evt) {
+    console.log(evt.target.value);
+});
+
+//8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
