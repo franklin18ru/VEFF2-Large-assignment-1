@@ -35,12 +35,12 @@
         var parentElements = [];
         if(parentSelector === "") {
             //If no parentSelector is passed through then return all parent elements
-        while (element.parentElement) {
-            parentElements.unshift(element.parentElement);
-            element = element.parentElement;
+            while (element.parentElement) {
+                parentElements.unshift(element.parentElement);
+                element = element.parentElement;
+            }
         }
-        }
-        else{
+        else {
             // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
                 if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
@@ -48,19 +48,22 @@
                     element = element.parentElement;
                 }
             }
-    }
-    return new MakeBelieveElement(parentElements)
-    };
+        }
+        return new MakeBelieveElement(parentElements)
+        };
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
-        var nodeList = [];
+        var returnList = [];
         for (let i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].parentNode.parentNode.matches(selector)) {
-                nodeList.push(this.nodes[i].parentNode.parentNode);
+            if (selector == null) { //empty query (optional)
+                returnList.push(this.nodes[i].parentNode.parentNode);
+            }
+            else if (this.nodes[i].parentNode.parentNode.matches(selector)) { //element matched the query
+                returnList.push(this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
             }
         }
-        return nodeList
+        return returnList
     };
 
     //6
@@ -82,20 +85,32 @@
 
     //9
     MakeBelieveElement.prototype.append = function(textToAppend) {
-        console.log(textToAppend);
-        if (typeof (textToAppend) == 'string') {
-            console.log('string!')
+        if (typeof (textToAppend) === 'string') { //textToAppend is a string
             var newDiv = document.createElement('div');
             newDiv.innerHTML = textToAppend;
-            console.log(newDiv);
+            this.nodes[0].appendChild(newDiv); //prepend the new div, which contains the new string
+        }
+        else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
+            this.nodes[0].appendChild(textToAppend.parentNode); //Append the element without creating a newDiv
+        }
+        else { //textToPrepend is not a string or an element, return
+            return null
         }
     };
 
-
     //10
     MakeBelieveElement.prototype.prepend = function(textToPrepend) {
-        // need to implement
-        console.log(textToPrepend);
+        if (typeof (textToPrepend) === 'string') { //textToPrepend is a string
+            var newDiv = document.createElement('div');
+            newDiv.innerHTML = textToPrepend;
+            this.nodes[0].insertBefore(newDiv, this.nodes[0].firstChild); //prepend the new div, which contains the new string
+        }
+        else if (typeof (textToPrepend) === typeof (document.createElement('h1'))) { //textToPrepend is an actual DOM element
+            this.nodes[0].insertBefore(textToPrepend.parentNode, this.nodes[0].firstChild); //Prepend the element without creating a new div
+        }
+        else { //textToPrepend is not a string or an element, return
+            return null
+        }
     };
 
     //11
@@ -161,12 +176,12 @@
 //});
 
 //testing 5
-//var grandParent = __('#password').grandParent();
-//console.log(grandParent); //should return the div with the id #grandfather
-//var isGrandParent = __('#password').grandParent('#grandfather');
-//console.log(isGrandParent); //should return the div with the id #grandfather
-//var emptyGrandParent = __('#password').grandParent('#unknownId');
-//console.log(emptyGrandParent); //should return an empty object
+var grandParent = __('#password').grandParent();
+console.log(grandParent); //should return the div with the id #grandfather
+var isGrandParent = __('#password').grandParent('#grandfather');
+console.log(isGrandParent); //should return the div with the id #grandfather
+var emptyGrandParent = __('#password').grandParent('#unknownId');
+console.log(emptyGrandParent); //should return an empty object
 
 //testing 7
 //__('password').onClick(function (evt) {
@@ -178,9 +193,21 @@
 
 //testing 9
 __('.the-appender').append('<p>I am an appended paragraph!</p>');
+__('.the-appender').append(
+    document.createElement('p')
+        .appendChild(
+            document.createTextNode('I am an appended paragraph!')
+        )
+);
 
 //testing 10
-//__('.the-prepender').prepend('<p>I am an prepended paragraph!</p>');
+__('.the-prepender').prepend('<p>I am an prepended paragraph!</p>');
+__('.the-prepender').prepend(
+    document.createElement('p')
+        .appendChild(
+            document.createTextNode('I am an prepended paragraph!')
+        )
+);
 
 
 
