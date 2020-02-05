@@ -28,9 +28,6 @@
         return new MakeBelieveElement(items);
     }
 
-    //3
-
-
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
