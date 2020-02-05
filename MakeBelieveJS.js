@@ -28,13 +28,10 @@
         return new MakeBelieveElement(items);
     }
 
-    //3
-
-
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
-        element = this.nodes[0];
+        var element = this.nodes[0];
         var parentElements = [];
         if(parentSelector === "") {
             //If no parentSelector is passed through then return all parent elements
@@ -46,9 +43,10 @@
         else{
             // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
-                if (element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
-                parentElements.unshift(element.parentElement);
-                element = element.parentElement;
+                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
+                    parentElements.unshift(element.parentElement);
+                    element = element.parentElement;
+                }
             }
     }
     return new MakeBelieveElement(parentElements)
@@ -83,27 +81,21 @@
     };
 
     //9
-    MakeBelieveElement.prototype.append = function(text) {
-        var appendMe;
-        if (typeof text == "string") {
-            appendMe = document.createElement(text); //?????
+    MakeBelieveElement.prototype.append = function(textToAppend) {
+        console.log(textToAppend);
+        if (typeof (textToAppend) == 'string') {
+            console.log('string!')
+            var newDiv = document.createElement('div');
+            newDiv.innerHTML = textToAppend;
+            console.log(newDiv);
         }
-        else {
-            appendMe = text.parentNode
-        }
-        this.nodes[0].append(appendMe)
     };
 
+
     //10
-    MakeBelieveElement.prototype.prepend = function(text) {
-        var prependMe;
-        if (typeof text == "string") {
-            prependMe = document.createElement(text);
-        }
-        else{
-            prependMe = text.parentNode
-        }
-        this.nodes[0].prepend(prependMe)
+    MakeBelieveElement.prototype.prepend = function(textToPrepend) {
+        // need to implement
+        console.log(textToPrepend);
     };
 
     //11
@@ -140,10 +132,10 @@
 
 //console.log(window);
 
-var paragraphs = __('p');
-var divs = __('.item');
+//var paragraphs = __('p');
+//var divs = __('.item');
 
-var parents = __('#password').parent('DIV');
+//var parents = __('#password').parent('DIV');
 
 //console.log(parents);
 // console.log(paragraphs);
@@ -163,18 +155,18 @@ var parents = __('#password').parent('DIV');
 //console.log(inputs); //should return a list of all inputs within a form with the id #my-form
 
 
-//testing 3 - not ready in code
+//testing 3 -  functions not ready in code
 //__('input').parent('form').onInput(function (evt) {
 //    alert('Something happened!')
 //});
 
 //testing 5
-var grandParent = __('#password').grandParent();
-console.log(grandParent); //should return the div with the id #grandfather
-var isGrandParent = __('#password').grandParent('#grandfather');
-console.log(isGrandParent); //should return the div with the id #grandfather
-var emptyGrandParent = __('#password').grandParent('#unknownId');
-console.log(emptyGrandParent); //should return an empty object
+//var grandParent = __('#password').grandParent();
+//console.log(grandParent); //should return the div with the id #grandfather
+//var isGrandParent = __('#password').grandParent('#grandfather');
+//console.log(isGrandParent); //should return the div with the id #grandfather
+//var emptyGrandParent = __('#password').grandParent('#unknownId');
+//console.log(emptyGrandParent); //should return an empty object
 
 //testing 7
 //__('password').onClick(function (evt) {
@@ -182,10 +174,10 @@ console.log(emptyGrandParent); //should return an empty object
 //});
 
 //testing 8
-__('#shakespeare-novel').insertText('To be, or not to be: this is the question');
+//__('#shakespeare-novel').insertText('To be, or not to be: this is the question');
 
 //testing 9
-//__('.the-appender').append('<p>I am an appended paragraph!</p>');
+__('.the-appender').append('<p>I am an appended paragraph!</p>');
 
 //testing 10
 //__('.the-prepender').prepend('<p>I am an prepended paragraph!</p>');
@@ -193,10 +185,10 @@ __('#shakespeare-novel').insertText('To be, or not to be: this is the question')
 
 
 //testing 13
-__('#elemToChange').css('background-color', 'lightpink');
+//__('#elemToChange').css('background-color', 'lightpink');
 
 //testing 16
-__('#username').onInput(function (evt) {
+//__('#username').onInput(function (evt) {
     //process the input
-    console.log(evt.target.value)
-});
+//    console.log(evt.target.value)
+//});
