@@ -148,14 +148,16 @@
 
 
     //15
-    MakeBelieveElement.prototype.onInput = function (evt) {
+    MakeBelieveElement.prototype.onSubmit = function (evt) {
         for (var i = 0; i < this.nodes.length; i++) {
-            this.nodes[i].addEventListener("submit", evt);
+            this.nodes[i].addEventListener("submit", function (e) {
+                evt(e)
+            });
         }
     };
 
     //16
-    MakeBelieveElement.prototype.onSubmit = function (evt) {
+    MakeBelieveElement.prototype.onInput = function (evt) {
         for (var i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("input", function (e) {
                 evt(e)
@@ -247,10 +249,14 @@ __('#elemToChange').css('background-color', 'lightpink');
 
 //testing 14
 __('#elemToChange').toggleClass('someClass');
+*/
 
-/*
+//testing 15
+__('#username').onSubmit(function (evt) {
+    console.log(evt.target.value)
+});
+
 //testing 16
 __('#username').onInput(function (evt) {
     console.log(evt.target.value)
 });
-
