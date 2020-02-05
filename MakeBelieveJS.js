@@ -69,10 +69,14 @@
 
     //6
     MakeBelieveElement.prototype.ancestor = function (selector) {
-        element = this.nodes[0];
+        element = this.nodes[0].parentElement.parentElement;
         while (element.parentElement) {
-            if (element.parentElement.tagName.toLowerCase() == selector.toLowerCase())
-               return element.parentElement
+            if (element.parentElement.matches(selector)){
+               return new MakeBelieveElement(element.parentElement)
+            }
+            else{
+                element = element.parentElement;
+            }
         }
     }
 
@@ -123,7 +127,7 @@
     };
 
     //11
-    MakeBelieveElement.prototype.delete = function(text) {
+    MakeBelieveElement.prototype.delete = function() {
         for (var i = 0; i < this.nodes.length; i++) {
             this.nodes[i].remove()
         }
@@ -211,8 +215,8 @@ console.log(emptyGrandParent); //should return an empty object
 
 //testing 6
 
-// var ancestor = __('#password').ancestor('.ancestor');
-// console.log(ancestor)
+var ancestor = __('#password').ancestor('.ancestor');
+console.log(ancestor)
 
 //testing 7
 __('#password').onClick(function (evt) {
@@ -242,7 +246,7 @@ __('.the-prepender').prepend(
 
 //testing 11
 
-__('#some-div').delete();
+// __('#some-div').delete();
 
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
