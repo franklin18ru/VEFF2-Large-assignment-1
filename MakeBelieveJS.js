@@ -68,7 +68,13 @@
     };
 
     //6
-
+    MakeBelieveElement.prototype.ancestor = function (selector) {
+        element = this.nodes[0];
+        while (element.parentElement) {
+            if (element.parentElement.tagName.toLowerCase() == selector.toLowerCase())
+               return element.parentElement
+        }
+    }
 
     //7
     MakeBelieveElement.prototype.onClick = function(evt) {
@@ -117,7 +123,11 @@
     };
 
     //11
-
+    MakeBelieveElement.prototype.delete = function(text) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].remove()
+        }
+    };
 
     //12
 
@@ -130,13 +140,22 @@
     };
 
     //14
+    MakeBelieveElement.prototype.toggleClass = function (className) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].classList.toggle(className)
+        }
+    };
 
 
     //15
-
+    MakeBelieveElement.prototype.onInput = function (evt) {
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].addEventListener("submit", evt);
+        }
+    };
 
     //16
-    MakeBelieveElement.prototype.onInput = function (evt) {
+    MakeBelieveElement.prototype.onSubmit = function (evt) {
         for (var i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("input", function (e) {
                 evt(e)
@@ -188,6 +207,11 @@ var emptyGrandParent = __('#password').grandParent('#unknownId');
 console.log(emptyGrandParent); //should return an empty object
 */
 
+//testing 6
+
+// var ancestor = __('#password').ancestor('.ancestor');
+// console.log(ancestor)
+
 //testing 7
 __('#password').onClick(function (evt) {
     console.log(evt.target.value);
@@ -214,12 +238,17 @@ __('.the-prepender').prepend(
         )
 );
 
+//testing 11
 
+__('#some-div').delete();
 
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
 
-*/
+//testing 14
+__('#elemToChange').toggleClass('someClass');
+
+/*
 //testing 16
 __('#username').onInput(function (evt) {
     console.log(evt.target.value)
