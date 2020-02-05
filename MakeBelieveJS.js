@@ -46,7 +46,7 @@
         else {
             // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
-                if (element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
+                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase())
                 parentElements.unshift(element.parentElement);
                 element = element.parentElement;
             }
@@ -91,17 +91,11 @@
             var newDiv = document.createElement('div');
             newDiv.innerHTML = textToAppend;
             this.nodes[0].appendChild(newDiv); //prepend the new div, which contains the new string
-        }
-        else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
+        } else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
             this.nodes[0].appendChild(textToAppend.parentNode); //Append the element without creating a newDiv
-        }
-        else { //textToPrepend is not a string or an element, return
+        } else { //textToPrepend is not a string or an element, return
             return null
         }
-        else {
-            appendMe = text.parentNode
-        }
-        this.nodes[0].append(appendMe)
     };
 
     //10
