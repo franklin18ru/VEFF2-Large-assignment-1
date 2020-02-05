@@ -28,28 +28,30 @@
         return new MakeBelieveElement(items);
     }
 
+
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
-        //Return all parent elements
-        element = this.nodes[0];
+    //Return all parent elements
+        var element = this.nodes[0];
         var parentElements = [];
         if(parentSelector === "") {
-            //If no parentSelector is passed through then return all parent elements
+        //If no parentSelector is passed through then return all parent elements
             while (element.parentElement) {
                 parentElements.unshift(element.parentElement);
                 element = element.parentElement;
+                }
             }
-        }
         else {
-            // If parentSelector is passed through only return parents of that type
+        // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
-                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase())
-                parentElements.unshift(element.parentElement);
-                element = element.parentElement;
+                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
+                    parentElements.unshift(element.parentElement);
+                    element = element.parentElement;
+                }
             }
         }
         return new MakeBelieveElement(parentElements)
-        };
+    };
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
@@ -62,7 +64,7 @@
                 returnList.push(this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
             }
         }
-        return returnList
+    return returnList
     };
 
     //6
@@ -88,9 +90,11 @@
             var newDiv = document.createElement('div');
             newDiv.innerHTML = textToAppend;
             this.nodes[0].appendChild(newDiv); //prepend the new div, which contains the new string
-        } else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
+        }
+        else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
             this.nodes[0].appendChild(textToAppend.parentNode); //Append the element without creating a newDiv
-        } else { //textToPrepend is not a string or an element, return
+        }
+        else { //textToPrepend is not a string or an element, return
             return null
         }
     };
@@ -136,41 +140,40 @@
         }
     };
 
-
 })(window);
+
 ///////////////////////////////////////test cases below///////////////////////////////////////
 
+/*
 
-
-//console.log(window);
+console.log(window);
 
 var paragraphs = __('p');
 var divs = __('.item');
 
 var parents = __('#password').parent('DIV');
 
-//console.log(parents);
-// console.log(paragraphs);
-// console.log(divs);
+console.log(parents);
+console.log(paragraphs);
+console.log(divs);
 
-//console.log(paragraphs.getLength());
-//console.log(divs.getLength());
+console.log(paragraphs.getLength());
+console.log(divs.getLength());
 
-//console.log(paragraphs.getTagNames());
-
-
-
+console.log(paragraphs.getTagNames());
 
 
 //testing 2
-//var inputs = __('#my-form input');
-//console.log(inputs); //should return a list of all inputs within a form with the id #my-form
+var inputs = __('#my-form input');
+console.log(inputs); //should return a list of all inputs within a form with the id #my-form
 
 
 //testing 3 - not ready in code
-//__('input').parent('form').onInput(function (evt) {
-//    alert('Something happened!')
-//});
+__('input').parent('form').onInput(function (evt) {
+    alert('Something happened!')
+});
+
+*/
 
 //testing 5
 var grandParent = __('#password').grandParent();
@@ -211,8 +214,10 @@ __('.the-prepender').prepend(
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
 
+/*
 //testing 16
 __('#username').onInput(function (evt) {
-    //process the input
+    process the input
     console.log(evt.target.value)
 });
+*/
