@@ -73,7 +73,9 @@
     //7
     MakeBelieveElement.prototype.onClick = function(evt) {
         for (var i = 0; i < this.nodes.length; i++) {
-            this.nodes[i].addEventListener("click", evt);
+            this.nodes[i].addEventListener("click", function (e) {
+                evt(e) //
+            });
         }
     };
 
@@ -136,7 +138,9 @@
     //16
     MakeBelieveElement.prototype.onInput = function (evt) {
         for (var i = 0; i < this.nodes.length; i++) {
-            this.nodes[i].addEventListener("input", evt);
+            this.nodes[i].addEventListener("input", function (e) {
+                evt(e)
+            });
         }
     };
 
@@ -173,7 +177,7 @@ __('input').parent('form').onInput(function (evt) {
     alert('Something happened!')
 });
 
-*/
+
 
 //testing 5
 var grandParent = __('#password').grandParent();
@@ -182,12 +186,13 @@ var isGrandParent = __('#password').grandParent('#grandfather');
 console.log(isGrandParent); //should return the div with the id #grandfather
 var emptyGrandParent = __('#password').grandParent('#unknownId');
 console.log(emptyGrandParent); //should return an empty object
+*/
 
 //testing 7
-//__('password').onClick(function (evt) {
-  //  console.log(evt.target.value);
-//});
-
+__('#password').onClick(function (evt) {
+    console.log(evt.target.value);
+});
+/*
 //testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
 
@@ -214,10 +219,9 @@ __('.the-prepender').prepend(
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
 
-/*
+*/
 //testing 16
 __('#username').onInput(function (evt) {
-    process the input
     console.log(evt.target.value)
 });
-*/
+
