@@ -75,7 +75,6 @@
                return new MakeBelieveElement(element.parentElement)
             }
             else{
-                console.log('in else')
                 element = element.parentElement;
             }
         }
