@@ -125,14 +125,26 @@
 
     //12
         function ajax(obj){
+            headerValue = obj['headers'][0]['Authorisation']
+            headerKey = Object.keys(obj['headers'][0])[0]
             var xhttp = new XMLHttpRequest();
-
+            //Apply beforeSend function
+            obj['beforeSend']
             xhttp.onreadystatechange = function() {
-            xhttp.setRequestHeader
-            xhttp.open(obj['method'], obj['url'])
-            xhttp.send()
-        
+            if(xhttp.readyState == xhttp.DONE && xhttp.status == 200){
+                obj['success']
+                }
+            if(xhttp.readyState == xhttp.DONE && xhttp.status !== 200)
+                obj['fail']
+            }
+        xhttp.open(obj['method'], obj['url'])
+        if(headerKey !== undefined && headerValue !== undefined) {
+            xhttp.setRequestHeader(headerKey, headerValue);
         }
+        xhttp.timeout = 10000;
+        xhttp.send(obj['data']);
+        
+       
         }
 
 
@@ -260,12 +272,12 @@ __('#username').onInput(function (evt) {
 
 //testing 12
 __.ajax({
-    url: 'https://serene-island-81305.herokuapp.com/200',
+    url: 'https://serene-island-81305.herokuapp.com/api/200',
     method: 'GET',
     timeout: 10,
     data: {},
     headers: [
-        {'Authorisation': 'my-secret-key' }
+        {}
     ],
 
     success: function(resp){
