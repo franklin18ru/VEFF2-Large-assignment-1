@@ -124,28 +124,27 @@
     };
 
     //12
-        function ajax(obj){
-            headerValue = obj['headers'][0]['Authorisation']
-            headerKey = Object.keys(obj['headers'][0])[0]
-            var xhttp = new XMLHttpRequest();
-            //Apply beforeSend function
-            obj['beforeSend']
-            xhttp.onreadystatechange = function() {
-            if(xhttp.readyState == xhttp.DONE && xhttp.status == 200){
-                obj['success']
+    function ajax(obj){
+        var headerValue = obj['headers'][0]['Authorisation'];
+        var headerKey = Object.keys(obj['headers'][0])[0];
+        var xhttp = new XMLHttpRequest();
+        //Apply beforeSend function
+        obj['beforeSend'];
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState === xhttp.DONE && xhttp.status === 200) {
+                obj['success'];
                 }
-            if(xhttp.readyState == xhttp.DONE && xhttp.status !== 200)
+            if (xhttp.readyState === xhttp.DONE && xhttp.status !== 200) {
                 obj['fail']
             }
-        xhttp.open(obj['method'], obj['url'])
+        };
+        xhttp.open(obj['method'], obj['url']);
         if(headerKey !== undefined && headerValue !== undefined) {
             xhttp.setRequestHeader(headerKey, headerValue);
         }
         xhttp.timeout = 10000;
         xhttp.send(obj['data']);
-        
-       
-        }
+    }
 
     //13
     MakeBelieveElement.prototype.css = function (element, value) {
@@ -246,7 +245,22 @@ __('.the-prepender').prepend(
 __('.some-div2').delete();
 //__('.elem-doesnt-exist').delete(); //this should have no effect
 
-
+//testing 12
+__.ajax({
+    url: 'https://serene-island-81305.herokuapp.com/api/200',
+    method: 'GET',
+    timeout: 10,
+    data: {},
+    headers: [
+        {}
+    ],
+    success: function(resp) {
+    },
+    fail: function(error) {
+    },
+    beforeSend: function(xhr) {
+    }
+});
 
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
@@ -265,25 +279,4 @@ __('#username').onInput(function (evt) {
     console.log(evt.target.value)
 });
 
-//testing 12
-__.ajax({
-    url: 'https://serene-island-81305.herokuapp.com/api/200',
-    method: 'GET',
-    timeout: 10,
-    data: {},
-    headers: [
-        {}
-    ],
-
-//    success: function(resp){
-
-//    },
-//    fail: function(error){
-
-//    },
-//    beforeSend: function(xhr){
-
-//    }
-
-//});
 
