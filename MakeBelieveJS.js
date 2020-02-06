@@ -218,7 +218,8 @@ __('.the-prepender').prepend(
 );
 
 //testing 11
-//__('#some-div').delete();
+__('.some-div2').delete();
+__('.elem-doesnt-exist').delete(); //this should have no effect
 
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
