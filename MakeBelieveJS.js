@@ -6,6 +6,7 @@
 
     //1
     globalObj.__ = query;
+    query.ajax = ajax;
 
     //2
     function query(cssSelector) {
@@ -15,27 +16,30 @@
 
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
-    //Return all parent elements
-        let element = this.nodes[0];
-        let parentElements = [];
-        if (parentSelector === "") {
-        //If no parentSelector is passed through then return all parent elements
+        //Return all parent elements
+        var element = this.nodes[0]
+        var parentElements = [];
+        if(parentSelector === ""){
+            //If no parentSelector is passed through then return all parent elements
+        while (element.parentElement) {
+            parentElements.unshift(element.parentElement);
+            element = element.parentElement;
+        }
+        }
+        else{
+            // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
+                if(element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
                 parentElements.unshift(element.parentElement);
                 element = element.parentElement;
-                }
             }
-        else {
-        // If parentSelector is passed through only return parents of that type
-            while (element.parentElement) {
-                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
-                    parentElements.unshift(element.parentElement);
-                    element = element.parentElement;
-                }
-            }
-        }
-        return new MakeBelieveElement(parentElements)
-    };
+
+
+
+    }
+    return new MakeBelieveElement(parentElements)
+    }
+
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
@@ -118,6 +122,17 @@
     };
 
     //12
+        function ajax(obj){
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+            xhttp.setRequestHeader
+            xhttp.open(obj['method'], obj['url'])
+            xhttp.send()
+        
+        }
+        }
+
 
 
     //13
@@ -176,6 +191,8 @@ __('input').parent('form').onInput(function (evt) {
     alert('Something happened!')
 });
 
+
+
 //testing 5
 var grandParent = __('#password').grandParent();
 console.log(grandParent); //should return the div with the id #grandfather
@@ -223,6 +240,8 @@ __('.the-prepender').prepend(
 // __('#some-div').delete();
 
 
+
+
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
 
@@ -234,8 +253,33 @@ __('#username').onSubmit(function (evt) {
     console.log('submitted!');
     console.log(evt.target.value)
 });
-*/
+
 //testing 16
 __('#username').onInput(function (evt) {
     console.log(evt.target.value)
 });
+*/
+//testing 12
+__.ajax({
+    url: 'https://serene-island-81305.herokuapp.com/200',
+    method: 'GET',
+    timeout: 10,
+    data: {},
+    headers: [
+        {'Authorisation': 'my-secret-key' }
+    ],
+
+    success: function(resp){
+
+    },
+    fail: function(error){
+
+    },
+    beforeSend: function(xhr){
+
+    }
+
+});
+
+var parent = __('#password').parent('form')
+console.log(parent)
