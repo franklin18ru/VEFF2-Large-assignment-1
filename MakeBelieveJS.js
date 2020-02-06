@@ -67,6 +67,7 @@
                 element = element.parentElement;
             }
         }
+        return {}
     };
 
     //7
@@ -200,13 +201,13 @@
 //var emptyGrandParent = __('#password').grandParent('#unknownId');
 //console.log(emptyGrandParent); //should return an empty object
 
-//testing 6
-//var ancestor = __('#password').ancestor('.ancestor');
-//console.log(ancestor);
-//var rootElem = __('#password').ancestor('.root');
-//console.log(rootElem);
-//var ancestorSib = __('#password').ancestor('.ancestor-sib');
-//console.log(ancestorSib); //should return an empty object
+// testing 6
+var ancestor = __('#password').ancestor('.ancestor');
+console.log(ancestor);
+var rootElem = __('#password').ancestor('.root');
+console.log(rootElem);
+var ancestorSib = __('#password').ancestor('.ancestor-sib');
+console.log(ancestorSib); //should return an empty object
 
 //testing 7
 //__('#password').onClick(function (evt) {
