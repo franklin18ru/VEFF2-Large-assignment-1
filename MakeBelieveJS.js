@@ -18,22 +18,21 @@
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
-        var element = this.nodes[0];
         var parentElements = [];
         if (parentSelector === ""){
+            
             //If no parentSelector is passed through then return all parent elements
-        while (element.parentElement) {
-            parentElements.unshift(element.parentElement);
-            element = element.parentElement;
+        for (var i = 0; i < this.nodes.length; i++){
+            parentElements.unshift(this.nodes[i].parentElement)
+            
         }
         }
         else{
             // If parentSelector is passed through only return parents of that type
-            while (element.parentElement) {
-                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
-                    parentElements.unshift(element.parentElement);
+            for (var i = 0; i < this.nodes.length; i++){
+                if (this.nodes[i].parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
+                    parentElements.unshift(this.nodes[i].parentElement)
                 }
-                element = element.parentElement;
             }
     }
         return new MakeBelieveElement(parentElements)
