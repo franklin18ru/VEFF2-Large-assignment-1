@@ -4,9 +4,10 @@
         this.nodes = nodes; //this instance of MakeBelieveElement
     }
 
+    query.ajax = ajax;
+
     //1
     globalObj.__ = query;
-    query.ajax = ajax;
 
     //2
     function query(cssSelector) {
@@ -92,7 +93,7 @@
             newDiv.innerHTML = textToAppend;
             this.nodes[0].appendChild(newDiv); //prepend the new div, which contains the new string
         }
-        else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element
+        else if (typeof (textToAppend) === typeof (document.createElement('h1'))) { //textToAppend is an actual DOM element (fx H1)
             this.nodes[0].appendChild(textToAppend.parentNode); //Append the element without creating a newDiv
         }
         else { //textToPrepend is not a string or an element, return
@@ -107,7 +108,7 @@
             newDiv.innerHTML = textToPrepend;
             this.nodes[0].insertBefore(newDiv, this.nodes[0].firstChild); //prepend the new div, which contains the new string
         }
-        else if (typeof (textToPrepend) === typeof (document.createElement('h1'))) { //textToPrepend is an actual DOM element
+        else if (typeof (textToPrepend) === typeof (document.createElement('h1'))) { //textToPrepend is an actual DOM element (fx H1)
             this.nodes[0].insertBefore(textToPrepend.parentNode, this.nodes[0].firstChild); //Prepend the element without creating a new div
         }
         else { //textToPrepend is not a string or an element, return
@@ -176,14 +177,14 @@
 var inputs = __('#my-form input');
 console.log(inputs); //should return a list of all inputs within a form with the id #my-form
 
-//testing 3 - not ready in code
+//testing 3
 //__('input').parent('form').onInput(function (evt) {
 //    alert('Something happened!')
 //});
 
 //testing 4
 var parent = __('#password').parent();
-console.log(parent);
+console.log(parent); //should return an empty list
 var formParent = __('#password').parent('form');
 console.log(formParent);
 
@@ -201,7 +202,7 @@ console.log(ancestor);
 var rootElem = __('#password').ancestor('.root');
 console.log(rootElem);
 var ancestorSib = __('#password').ancestor('.ancestor-sib');
-console.log(ancestorSib); //should return an empty object
+console.log(ancestorSib);
 
 //testing 7
 __('#password').onClick(function (evt) {
@@ -231,7 +232,7 @@ __('.the-prepender').prepend(
 
 //testing 11
 __('.some-div2').delete();
-__('.elem-doesnt-exist').delete(); //this should have no effect
+//__('.elem-doesnt-exist').delete(); //this should have no effect
 
 
 
