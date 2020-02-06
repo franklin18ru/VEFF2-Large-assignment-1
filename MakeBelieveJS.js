@@ -43,16 +43,17 @@
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
-        let returnList = [];
         for (let i = 0; i < this.nodes.length; i++) {
             if (selector == null) { //empty query (optional)
-                returnList.push(this.nodes[i].parentNode.parentNode);
+                return (this.nodes[i].parentNode.parentNode);
             }
             else if (this.nodes[i].parentNode.parentNode.matches(selector)) { //element matched the query
-                returnList.push(this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
+                return (this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
+            }
+            else {
+                return {} //empty object
             }
         }
-        return returnList
     };
 
     //6
@@ -60,7 +61,7 @@
         let element = this.nodes[0].parentElement.parentElement;
         while (element.parentElement) {
             if (element.parentElement.matches(selector)){
-               return new MakeBelieveElement(element.parentElement)
+                return element.parentElement
             }
             else {
                 element = element.parentElement;
@@ -69,10 +70,10 @@
     };
 
     //7
-    MakeBelieveElement.prototype.onClick = function(callback) {
+    MakeBelieveElement.prototype.onClick = function(event) {
         for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("click", function (e) {
-                callback(e)
+                event(e)
             });
         }
     };
@@ -170,49 +171,47 @@
 
 })(window);
 
+
 ///////////////////////////////////////test cases below///////////////////////////////////////
 
 
-
-console.log(window);
-/*
-
-var parents = __('#password').parent('DIV');
-
-
-
 //testing 2
-var inputs = __('#my-form input');
-console.log(inputs); //should return a list of all inputs within a form with the id #my-form
-
+//var inputs = __('#my-form input');
+//console.log(inputs); //should return a list of all inputs within a form with the id #my-form
 
 //testing 3 - not ready in code
-__('input').parent('form').onInput(function (evt) {
-    alert('Something happened!')
-});
+//__('input').parent('form').onInput(function (evt) {
+//    alert('Something happened!')
+//});
+
+//testing 4
+//var parent = __('#password').parent();
+//console.log(parent);
+//var formParent = __('#password').parent('form');
+//console.log(formParent);
 
 
 
 //testing 5
-var grandParent = __('#password').grandParent();
-console.log(grandParent); //should return the div with the id #grandfather
-var isGrandParent = __('#password').grandParent('#grandfather');
-console.log(isGrandParent); //should return the div with the id #grandfather
-var emptyGrandParent = __('#password').grandParent('#unknownId');
-console.log(emptyGrandParent); //should return an empty object
+//var grandParent = __('#password').grandParent();
+//console.log(grandParent); //should return the div with the id #grandfather
+//var isGrandParent = __('#password').grandParent('#grandfather');
+//console.log(isGrandParent); //should return the div with the id #grandfather
+//var emptyGrandParent = __('#password').grandParent('#unknownId');
+//console.log(emptyGrandParent); //should return an empty object
 
 //testing 6
-var ancestor = __('#password').ancestor('.ancestor');
-console.log(ancestor);
-var rootElem = __('#password').ancestor('.root');
-console.log(rootElem);
-var ancestorSib = __('#password').ancestor('.ancestor-sib');
-console.log(ancestorSib); //should return an empty object
+//var ancestor = __('#password').ancestor('.ancestor');
+//console.log(ancestor);
+//var rootElem = __('#password').ancestor('.root');
+//console.log(rootElem);
+//var ancestorSib = __('#password').ancestor('.ancestor-sib');
+//console.log(ancestorSib); //should return an empty object
 
 //testing 7
-__('#password').onClick(function (evt) {
-    console.log(evt.target.value);
-});
+//__('#password').onClick(function (evt) {
+//    console.log(evt.target.value);
+//});
 
 //testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
@@ -236,9 +235,8 @@ __('.the-prepender').prepend(
 );
 
 //testing 11
-
-// __('#some-div').delete();
-
+__('.some-div2').delete();
+__('.elem-doesnt-exist').delete(); //this should have no effect
 
 
 
@@ -246,7 +244,7 @@ __('.the-prepender').prepend(
 __('#elemToChange').css('background-color', 'lightpink');
 
 //testing 14
-__('#elemToChange').toggleClass('someClass');
+//__('#elemToChange').toggleClass('someClass');
 
 //testing 15
 __('#username').onSubmit(function (evt) {
@@ -258,7 +256,7 @@ __('#username').onSubmit(function (evt) {
 __('#username').onInput(function (evt) {
     console.log(evt.target.value)
 });
-*/
+
 //testing 12
 __.ajax({
     url: 'https://serene-island-81305.herokuapp.com/200',
