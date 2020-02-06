@@ -135,7 +135,6 @@
         }
     };
 
-
     //15
     MakeBelieveElement.prototype.onSubmit = function (evt) {
         for (let i = 0; i < this.nodes.length; i++) {
@@ -176,20 +175,20 @@
 //console.log(formParent);
 
 //testing 5
-//var grandParent = __('#password').grandParent();
-//console.log(grandParent); //should return the div with the id #grandfather
-//var isGrandParent = __('#password').grandParent('#grandfather');
-//console.log(isGrandParent); //should return the div with the id #grandfather
-//var emptyGrandParent = __('#password').grandParent('#unknownId');
-//console.log(emptyGrandParent); //should return an empty object
+var grandParent = __('#password').grandParent();
+console.log(grandParent); //should return the div with the id #grandfather
+var isGrandParent = __('#password').grandParent('#grandfather');
+console.log(isGrandParent); //should return the div with the id #grandfather
+var emptyGrandParent = __('#password').grandParent('#unknownId');
+console.log(emptyGrandParent); //should return an empty object
 
 //testing 6
-//var ancestor = __('#password').ancestor('.ancestor');
-//console.log(ancestor);
-//var rootElem = __('#password').ancestor('.root');
-//console.log(rootElem);
-//var ancestorSib = __('#password').ancestor('.ancestor-sib');
-//console.log(ancestorSib); //should return an empty object
+var ancestor = __('#password').ancestor('.ancestor');
+console.log(ancestor);
+var rootElem = __('#password').ancestor('.root');
+console.log(rootElem);
+var ancestorSib = __('#password').ancestor('.ancestor-sib');
+console.log(ancestorSib); //should return an empty object
 
 //testing 7
 //__('#password').onClick(function (evt) {
@@ -225,7 +224,7 @@ __('.elem-doesnt-exist').delete(); //this should have no effect
 __('#elemToChange').css('background-color', 'lightpink');
 
 //testing 14
-//__('#elemToChange').toggleClass('someClass');
+__('#elemToChange').toggleClass('someClass');
 
 //testing 15
 //__('#username').onSubmit(function (evt) {
