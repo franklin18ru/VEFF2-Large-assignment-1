@@ -1,40 +1,24 @@
 (function (globalObj) {
-
     //Constructor function:
     function MakeBelieveElement(nodes) { //nodes that come from query selectors
         this.nodes = nodes; //this instance of MakeBelieveElement
     }
-
-    MakeBelieveElement.prototype.getLength = function() {
-        return this.nodes.length;
-    };
-
-    MakeBelieveElement.prototype.getTagNames = function() {
-        var tagNames = [];
-        for (var i = 0; i < this.nodes.length; i++) {
-            var currentElement = this.nodes[i];
-            tagNames.push(currentElement.tagName.toLowerCase());
-        }
-        return tagNames;
-    };
-
 
     //1
     globalObj.__ = query;
 
     //2
     function query(cssSelector) {
-        var items = document.querySelectorAll(cssSelector); //items will be a nodeList from what cssSelector is selecting
+        let items = document.querySelectorAll(cssSelector); //items will be a nodeList from what cssSelector is selecting
         return new MakeBelieveElement(items);
     }
-
 
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
     //Return all parent elements
-        var element = this.nodes[0];
-        var parentElements = [];
-        if(parentSelector === "") {
+        let element = this.nodes[0];
+        let parentElements = [];
+        if (parentSelector === "") {
         //If no parentSelector is passed through then return all parent elements
             while (element.parentElement) {
                 parentElements.unshift(element.parentElement);
@@ -55,7 +39,7 @@
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
-        var returnList = [];
+        let returnList = [];
         for (let i = 0; i < this.nodes.length; i++) {
             if (selector == null) { //empty query (optional)
                 returnList.push(this.nodes[i].parentNode.parentNode);
@@ -64,42 +48,42 @@
                 returnList.push(this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
             }
         }
-    return returnList
+        return returnList
     };
 
     //6
     MakeBelieveElement.prototype.ancestor = function (selector) {
-        element = this.nodes[0].parentElement.parentElement;
+        let element = this.nodes[0].parentElement.parentElement;
         while (element.parentElement) {
             if (element.parentElement.matches(selector)){
                return new MakeBelieveElement(element.parentElement)
             }
-            else{
+            else {
                 element = element.parentElement;
             }
         }
-    }
+    };
 
     //7
-    MakeBelieveElement.prototype.onClick = function(evt) {
-        for (var i = 0; i < this.nodes.length; i++) {
+    MakeBelieveElement.prototype.onClick = function(callback) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("click", function (e) {
-                evt(e) //
+                callback(e)
             });
         }
     };
 
     //8
     MakeBelieveElement.prototype.insertText = function(text) {
-        for (var i = 0; i < this.nodes.length; i++) {
-            this.nodes[i].innerHTML = text
+        for (let i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].innerHTML = text //replace the innerHTML to the new text
         }
     };
 
     //9
     MakeBelieveElement.prototype.append = function(textToAppend) {
         if (typeof (textToAppend) === 'string') { //textToAppend is a string
-            var newDiv = document.createElement('div');
+            let newDiv = document.createElement('div');
             newDiv.innerHTML = textToAppend;
             this.nodes[0].appendChild(newDiv); //prepend the new div, which contains the new string
         }
@@ -114,7 +98,7 @@
     //10
     MakeBelieveElement.prototype.prepend = function(textToPrepend) {
         if (typeof (textToPrepend) === 'string') { //textToPrepend is a string
-            var newDiv = document.createElement('div');
+            let newDiv = document.createElement('div');
             newDiv.innerHTML = textToPrepend;
             this.nodes[0].insertBefore(newDiv, this.nodes[0].firstChild); //prepend the new div, which contains the new string
         }
@@ -128,7 +112,7 @@
 
     //11
     MakeBelieveElement.prototype.delete = function() {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].remove()
         }
     };
@@ -138,14 +122,14 @@
 
     //13
     MakeBelieveElement.prototype.css = function (element, value) {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].setAttribute("style", `${element}: ${value}`)
         }
     };
 
     //14
     MakeBelieveElement.prototype.toggleClass = function (className) {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].classList.toggle(className)
         }
     };
@@ -153,7 +137,7 @@
 
     //15
     MakeBelieveElement.prototype.onSubmit = function (evt) {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("submit", function (e) {
                 evt(e)
             });
@@ -162,34 +146,24 @@
 
     //16
     MakeBelieveElement.prototype.onInput = function (evt) {
-        for (var i = 0; i < this.nodes.length; i++) {
+        for (let i = 0; i < this.nodes.length; i++) {
             this.nodes[i].addEventListener("input", function (e) {
                 evt(e)
             });
         }
-    };
+    }
 
 })(window);
 
 ///////////////////////////////////////test cases below///////////////////////////////////////
 
-/*
+
 
 console.log(window);
-
-var paragraphs = __('p');
-var divs = __('.item');
+/*
 
 var parents = __('#password').parent('DIV');
 
-console.log(parents);
-console.log(paragraphs);
-console.log(divs);
-
-console.log(paragraphs.getLength());
-console.log(divs.getLength());
-
-console.log(paragraphs.getTagNames());
 
 
 //testing 2
@@ -202,8 +176,6 @@ __('input').parent('form').onInput(function (evt) {
     alert('Something happened!')
 });
 
-
-
 //testing 5
 var grandParent = __('#password').grandParent();
 console.log(grandParent); //should return the div with the id #grandfather
@@ -211,18 +183,20 @@ var isGrandParent = __('#password').grandParent('#grandfather');
 console.log(isGrandParent); //should return the div with the id #grandfather
 var emptyGrandParent = __('#password').grandParent('#unknownId');
 console.log(emptyGrandParent); //should return an empty object
-*/
 
 //testing 6
-
 var ancestor = __('#password').ancestor('.ancestor');
-console.log(ancestor)
+console.log(ancestor);
+var rootElem = __('#password').ancestor('.root');
+console.log(rootElem);
+var ancestorSib = __('#password').ancestor('.ancestor-sib');
+console.log(ancestorSib); //should return an empty object
 
 //testing 7
 __('#password').onClick(function (evt) {
     console.log(evt.target.value);
 });
-/*
+
 //testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
 
@@ -248,18 +222,19 @@ __('.the-prepender').prepend(
 
 // __('#some-div').delete();
 
+
 //testing 13
 __('#elemToChange').css('background-color', 'lightpink');
 
 //testing 14
 __('#elemToChange').toggleClass('someClass');
-*/
 
 //testing 15
 __('#username').onSubmit(function (evt) {
+    console.log('submitted!');
     console.log(evt.target.value)
 });
-
+*/
 //testing 16
 __('#username').onInput(function (evt) {
     console.log(evt.target.value)
