@@ -17,9 +17,9 @@
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
-        var element = this.nodes[0]
+        var element = this.nodes[0];
         var parentElements = [];
-        if(parentSelector === ""){
+        if (parentSelector === ""){
             //If no parentSelector is passed through then return all parent elements
         while (element.parentElement) {
             parentElements.unshift(element.parentElement);
@@ -29,29 +29,27 @@
         else{
             // If parentSelector is passed through only return parents of that type
             while (element.parentElement) {
-                if(element.parentElement.tagName.toLowerCase() == parentSelector.toLowerCase())
-                parentElements.unshift(element.parentElement);
+                if (element.parentElement.tagName.toLowerCase() === parentSelector.toLowerCase()) {
+                    parentElements.unshift(element.parentElement);
+                }
                 element = element.parentElement;
             }
-
-
-
     }
-    return new MakeBelieveElement(parentElements)
-    }
+        return new MakeBelieveElement(parentElements)
+    };
 
 
     //5
     MakeBelieveElement.prototype.grandParent = function (selector) {
         for (let i = 0; i < this.nodes.length; i++) {
             if (selector == null) { //empty query (optional)
-                return (this.nodes[i].parentNode.parentNode);
+                return new MakeBelieveElement(this.nodes[i].parentNode.parentNode);
             }
             else if (this.nodes[i].parentNode.parentNode.matches(selector)) { //element matched the query
-                return (this.nodes[i].parentNode.parentNode); //parent.parent = grandParent
+                return new MakeBelieveElement(this.nodes[i].parentNode.parentNode);//parent.parent = grandParent
             }
             else {
-                return {} //empty object
+                return new MakeBelieveElement({}); //empty object
             }
         }
     };
@@ -61,13 +59,14 @@
         let element = this.nodes[0].parentElement.parentElement;
         while (element.parentElement) {
             if (element.parentElement.matches(selector)){
-                return element.parentElement
+                return new MakeBelieveElement(element.parentElement);
+
             }
             else {
                 element = element.parentElement;
             }
         }
-        return {}
+        return new MakeBelieveElement({}); //empty object
     };
 
     //7
@@ -147,8 +146,6 @@
        
         }
 
-
-
     //13
     MakeBelieveElement.prototype.css = function (element, value) {
         for (let i = 0; i < this.nodes.length; i++) {
@@ -162,7 +159,6 @@
             this.nodes[i].classList.toggle(className)
         }
     };
-
 
     //15
     MakeBelieveElement.prototype.onSubmit = function (evt) {
@@ -189,8 +185,8 @@
 
 
 //testing 2
-//var inputs = __('#my-form input');
-//console.log(inputs); //should return a list of all inputs within a form with the id #my-form
+var inputs = __('#my-form input');
+console.log(inputs); //should return a list of all inputs within a form with the id #my-form
 
 //testing 3 - not ready in code
 //__('input').parent('form').onInput(function (evt) {
@@ -198,22 +194,20 @@
 //});
 
 //testing 4
-//var parent = __('#password').parent();
-//console.log(parent);
-//var formParent = __('#password').parent('form');
-//console.log(formParent);
-
-
+var parent = __('#password').parent();
+console.log(parent);
+var formParent = __('#password').parent('form');
+console.log(formParent);
 
 //testing 5
-//var grandParent = __('#password').grandParent();
-//console.log(grandParent); //should return the div with the id #grandfather
-//var isGrandParent = __('#password').grandParent('#grandfather');
-//console.log(isGrandParent); //should return the div with the id #grandfather
-//var emptyGrandParent = __('#password').grandParent('#unknownId');
-//console.log(emptyGrandParent); //should return an empty object
+var grandParent = __('#password').grandParent();
+console.log(grandParent); //should return the div with the id #grandfather
+var isGrandParent = __('#password').grandParent('#grandfather');
+console.log(isGrandParent); //should return the div with the id #grandfather
+var emptyGrandParent = __('#password').grandParent('#unknownId');
+console.log(emptyGrandParent); //should return an empty object
 
-// testing 6
+//testing 6
 var ancestor = __('#password').ancestor('.ancestor');
 console.log(ancestor);
 var rootElem = __('#password').ancestor('.root');
@@ -222,9 +216,9 @@ var ancestorSib = __('#password').ancestor('.ancestor-sib');
 console.log(ancestorSib); //should return an empty object
 
 //testing 7
-//__('#password').onClick(function (evt) {
-//    console.log(evt.target.value);
-//});
+__('#password').onClick(function (evt) {
+    console.log(evt.target.value);
+});
 
 //testing 8
 __('#shakespeare-novel').insertText('To be, or not to be: this is the question');
@@ -257,7 +251,7 @@ __('.elem-doesnt-exist').delete(); //this should have no effect
 __('#elemToChange').css('background-color', 'lightpink');
 
 //testing 14
-//__('#elemToChange').toggleClass('someClass');
+__('#elemToChange').toggleClass('someClass');
 
 //testing 15
 __('#username').onSubmit(function (evt) {
@@ -280,17 +274,15 @@ __.ajax({
         {}
     ],
 
-    success: function(resp){
+//    success: function(resp){
 
-    },
-    fail: function(error){
+//    },
+//    fail: function(error){
 
-    },
-    beforeSend: function(xhr){
+//    },
+//    beforeSend: function(xhr){
 
-    }
+//    }
 
-});
+//});
 
-var parent = __('#password').parent('form')
-console.log(parent)
