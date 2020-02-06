@@ -20,7 +20,7 @@
         //Return all parent elements
         var element = this.nodes[0];
         var parentElements = [];
-        if (parentSelector === ""){
+        if (parentSelector === "") {
             //If no parentSelector is passed through then return all parent elements
         while (element.parentElement) {
             parentElements.unshift(element.parentElement);
@@ -61,7 +61,6 @@
         while (element.parentElement) {
             if (element.parentElement.matches(selector)){
                 return new MakeBelieveElement(element.parentElement);
-
             }
             else {
                 element = element.parentElement;
@@ -124,7 +123,7 @@
     };
 
     //12
-    function ajax(obj){
+    function ajax(obj) {
         var headerValue = obj['headers'][0]['Authorisation'];
         var headerKey = Object.keys(obj['headers'][0])[0];
         var xhttp = new XMLHttpRequest();
@@ -198,6 +197,8 @@ var parent = __('#password').parent();
 console.log(parent); //should return an empty list
 var formParent = __('#password').parent('form');
 console.log(formParent);
+var noParent = __('#shakespeare-novel').parent();
+console.log(noParent);
 
 //testing 5
 var grandParent = __('#password').grandParent();
