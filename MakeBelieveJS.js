@@ -17,7 +17,7 @@
     //4
     MakeBelieveElement.prototype.parent = function (parentSelector = "") {
         //Return all parent elements
-        var element = this.nodes[0]
+        var element = this.nodes[0];
         var parentElements = [];
         if (parentSelector === ""){
             //If no parentSelector is passed through then return all parent elements
@@ -35,7 +35,7 @@
                 element = element.parentElement;
             }
     }
-    return new MakeBelieveElement(parentElements)
+        return new MakeBelieveElement(parentElements)
     };
 
 
@@ -49,7 +49,7 @@
                 return new MakeBelieveElement(this.nodes[i].parentNode.parentNode);//parent.parent = grandParent
             }
             else {
-                return {} //empty object
+                return new MakeBelieveElement({}); //empty object
             }
         }
     };
@@ -66,7 +66,7 @@
                 element = element.parentElement;
             }
         }
-        return {}
+        return new MakeBelieveElement({}); //empty object
     };
 
     //7
@@ -133,7 +133,6 @@
         
         }
         }
-
 
     //13
     MakeBelieveElement.prototype.css = function (element, value) {
